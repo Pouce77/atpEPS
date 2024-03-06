@@ -2,4 +2,29 @@
 
 {% block body %}
     {% include "home/_navbar.html.twig" %}
+    <div class="container">
+        <div class="m-4 p-4 rounded text-light">
+            <h1>ATP EPS</h1>
+            <br>
+            <h3>Un tournoi ATP pour vos activités duelles</h3>
+            <br>
+            <p>En créant votre compte sécurisé, vous pourrez :</p>
+            <ul>
+                <li>
+                    <p>Importer vos élèves</p>
+                </li>
+                <li>
+                    <p>Sauvegarder vos tournois</p>
+                </li>
+                <li>
+                    <p>Noter les résultats</p>
+                </li>
+                <li>
+                    <p>Exporter les résultats</p>
+                </li>
+            </ul>
+            <a href="{{ path('app_login') }}" class="btn btn-primary">Créer votre compte</a>
+        </div>
+    </div>
 {% endblock %}
+ 
