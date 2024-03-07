@@ -4,3 +4,10 @@ body {
     background-repeat: no-repeat;
     height: 100vh;
 }
+.groupelink{
+    text-decoration: none;
+    color: rgb(71, 64, 64);
+}
+.groupelink:hover{
+    color: rgb(163, 163, 163);
+}
