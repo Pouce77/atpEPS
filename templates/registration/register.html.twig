@@ -3,21 +3,27 @@
 {% block title %}Register{% endblock %}
 
 {% block body %}
+{% include "home/_navbar.html.twig" %}
+<nav class='ariane m-2 sourceCode slide-in-right' aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a class="text-decoration-none link" href="/">Accueil</a></li>
+        <li class="breadcrumb-item active text-light" aria-current="page">S'inscrire</li>
+    </ol>
+</nav>
     {% for flash_error in app.flashes('verify_email_error') %}
         <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
     {% endfor %}
-    
-    <h1>Register</h1>
-
+    <div class="col-10 col-sm-8 col-md-6 m-auto bg-light mt-4 p-4 rounded">
     {{ form_errors(registrationForm) }}
 
     {{ form_start(registrationForm) }}
         {{ form_row(registrationForm.email) }}
         {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
+            label: 'Mot de passe'
         }) }}
         {{ form_row(registrationForm.agreeTerms) }}
 
-        <button type="submit" class="btn">Register</button>
+        <button type="submit" class="btn btn-primary">S'inscrire</button>
     {{ form_end(registrationForm) }}
+</div>
 {% endblock %}

@@ -5,6 +5,12 @@
 
 {% block body %}
 {% include "home/_navbar.html.twig" %}
+<nav class='ariane m-2 sourceCode slide-in-right' aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a class="text-decoration-none link" href="/">Accueil</a></li>
+        <li class="breadcrumb-item active text-light" aria-current="page">Se connecter</li>
+    </ol>
+</nav>
 <form method="post" class="col-10 col-sm-8 col-md-6 m-auto bg-light mt-4 p-4 rounded">
     {% if error %}
         <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
@@ -12,13 +18,13 @@
 
     {% if app.user %}
         <div class="mb-3">
-            You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
+            Vous êtes connecté en tant que {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Se déconnecter</a>
         </div>
     {% endif %}
 
     <label for="inputEmail" class="form-label">Email</label>
     <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control mb-4" autocomplete="email" required autofocus>
-    <label for="inputPassword" class="form-label">Password</label>
+    <label for="inputPassword" class="form-label">Mot de passe</label>
     <input type="password" name="password" id="inputPassword" class="form-control mb-4" autocomplete="current-password" required>
 
     <input type="hidden" name="_csrf_token"

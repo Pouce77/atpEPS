@@ -15,4 +15,13 @@ class DashboardController extends AbstractController
             'controller_name' => 'DashboardController',
         ]);
     }
+
+    #[Route('/dashboard/groupe', name: 'app_groupe')]
+    public function groupe(): Response
+    {
+        $groupes = ['Groupe 1', 'Groupe 2', 'Groupe 3'];
+        return $this->render('dashboard/groupe.html.twig', [
+            'groupes' => $groupes,
+        ]);
+    }
 }

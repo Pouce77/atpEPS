@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes groupes{% endblock %}
+
+{% block body %}
+{% include "home/_navbar.html.twig" %}
+{% include "dashboard/_menu.html.twig" %}
+{% include "_flash.html.twig" %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-12 d-flex gap-2 m-4 flex-wrap">
+      {% for groupe in groupes %}
+<div class="card" style="width:18rem;">
+  <div class="card-body">
+    <h5 class="card-title">{{groupe}}</h5>
+    <h6 class="card-subtitle mb-2 text-muted ">Card subtitle</h6>
+    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+    b5
+  </div>
+</div>
+{% endfor %}
+    </div>
+  </div>
+
+{% endblock %}
