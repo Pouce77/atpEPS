@@ -1,9 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Log in!{% endblock %}
+{% block title %}Se connecter à ATP EPS{% endblock %}
+
 
 {% block body %}
-<form method="post">
+{% include "home/_navbar.html.twig" %}
+<form method="post" class="col-10 col-sm-8 col-md-6 m-auto bg-light mt-4 p-4 rounded">
     {% if error %}
         <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
@@ -14,18 +16,17 @@
         </div>
     {% endif %}
 
-    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-    <label for="inputEmail">Email</label>
-    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
-    <label for="inputPassword">Password</label>
-    <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+    <label for="inputEmail" class="form-label">Email</label>
+    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control mb-4" autocomplete="email" required autofocus>
+    <label for="inputPassword" class="form-label">Password</label>
+    <input type="password" name="password" id="inputPassword" class="form-control mb-4" autocomplete="current-password" required>
 
     <input type="hidden" name="_csrf_token"
            value="{{ csrf_token('authenticate') }}"
     >
 
-    <button class="btn btn-lg btn-primary" type="submit">
-        Sign in
+    <button class="btn btn-primary m-4" type="submit">
+        Se connecter
     </button>
 </form>
 {% endblock %}
