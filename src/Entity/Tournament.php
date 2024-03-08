@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\TournamentRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -19,6 +21,15 @@ class Tournament
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $createdAt = null;
+
+    #[ORM\Column]
+    private ?int $classement = null;
+
+    #[ORM\Column]
+    private ?int $nbreMatch = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $Player = null;
 
     public function getId(): ?int
     {
@@ -45,6 +56,42 @@ class Tournament
     public function setCreatedAt(\DateTimeInterface $createdAt): static
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getClassement(): ?int
+    {
+        return $this->classement;
+    }
+
+    public function setClassement(int $classement): static
+    {
+        $this->classement = $classement;
+
+        return $this;
+    }
+
+    public function getNbreMatch(): ?int
+    {
+        return $this->nbreMatch;
+    }
+
+    public function setNbreMatch(int $nbreMatch): static
+    {
+        $this->nbreMatch = $nbreMatch;
+
+        return $this;
+    }
+
+    public function getPlayer(): ?string
+    {
+        return $this->Player;
+    }
+
+    public function setPlayer(string $Player): static
+    {
+        $this->Player = $Player;
 
         return $this;
     }

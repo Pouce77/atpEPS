@@ -1,20 +1,32 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello TournamentController!{% endblock %}
+{% block title %}Tournois{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+{% include "home/_navbar.html.twig" %}
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>C:/Users/julie/Desktop/Sites/atpEPS/src/Controller/TournamentController.php</code></li>
-        <li>Your template at <code>C:/Users/julie/Desktop/Sites/atpEPS/templates/tournament/index.html.twig</code></li>
-    </ul>
-</div>
+<h1 class="text-light mx-4 mt-4">Tournoi du groupe {{groupe}}</h1>
+<h3 class="text-light ms-4">{{"now"|date("d/m/Y")}}</h3>
+    <div>
+        <table class="table table-hover  m-4 col-11 col-md-6">
+            <thead>
+                <tr>
+                    <th class="py-1 px-4">Classement</th>
+                    <th class="py-1 px-4">Nom</th>
+                    <th class="py-1 px-4">Point de classement</th>
+                    <th class="py-1 px-4">Nombre de match</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for student in tournament %}
+                <tr>
+                    <td class="py-1 px-4">{{student.classement}}</td>
+                    <td class="py-1 px-4">{{ student.player }}</td>
+                    <td class="py-1 px-4"> 12 </td>
+                    <td class="py-1 px-4">{{student.nbreMatch}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% endblock %}
