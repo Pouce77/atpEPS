@@ -4,17 +4,19 @@
 
 {% block body %}
 {% include "home/_navbar.html.twig" %}
+{% include "_flash.html.twig" %}
 
-<h1 class="text-light mx-4 mt-4">Tournoi du groupe {{groupe}}</h1>
-<h3 class="text-light ms-4">{{"now"|date("d/m/Y")}}</h3>
-    <div>
-        <table class="table table-hover  m-4 col-11 col-md-6">
+<h3 class="text-light mx-4 mt-4">{{title}}</h3>
+<p class="ms-4 text-light"><i>{{date|date("d/m/Y")}}</i></p>
+    <div class="d-flex flex-column-reverse flex-xl-row justify-content-start">
+        <table class="table table-bordered mt-4 mx-2 col-11 col-md-6">
             <thead>
                 <tr>
                     <th class="py-1 px-4">Classement</th>
                     <th class="py-1 px-4">Nom</th>
                     <th class="py-1 px-4">Point de classement</th>
                     <th class="py-1 px-4">Nombre de match</th>
+                    <th class="py-1 px-4">Arbitrage</th>
                 </tr>
             </thead>
             <tbody>
@@ -24,9 +26,55 @@
                     <td class="py-1 px-4">{{ student.player }}</td>
                     <td class="py-1 px-4"> 12 </td>
                     <td class="py-1 px-4">{{student.nbreMatch}}</td>
+                    <td class="py-1 px-4">{{student.arbitre}} </td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
+        <div class="m-4">
+            <h3 class="text-center text-light">Match</h3>
+
+            <form action="{{path('app_tournament_match')}}" method="post" class="bg-light rounded p-2 d-flex flex-column">
+                <div class="d-flex flex-row justify-content-around p-4 border-bottom">
+                <div>
+                    <select class="py-2 px-4 form-select" name="gagnant" id="gagnant">
+                        {% for student in tournament %}
+                            <option value="{{student.player}}">{{student.player}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <h3 class="mx-4">Bat</h3>
+                <div>
+                    <select class="py-2 px-4 form-select" name="perdant" id="perdant">
+                        {% for student in tournament %}
+                            <option value="{{student.player}}">{{student.player}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                </div>
+                <h6 class="text-center mt-2">Score</h6>
+                <div class="d-flex flex-row justify-content-around pb-2 border-bottom">
+                    <div class="text-center">
+                        <input type="number" class="w-25 border rounded fs-3" name="score_gagnant" id="score_gagnant" value="0">
+                    </div>
+                    <div class="text-center">
+                        <input type="number" class="w-25 border rounded fs-3" name="score_perdant" id="score_perdant" value="0">
+                    </div>
+                </div>
+                <div class="w-50 m-auto">
+                    <h6 class="text-center mt-2">Arbitre</h6>
+                    <select class="py-2 px-4 form-select mb-2" name="arbitre" id="arbitre">
+                            <option value="aucun">Aucun arbitre</option>
+                        {% for student in tournament %}
+                            <option value="{{student.player}}">{{student.player}}</option>
+                        {% endfor %}
+                    </select>
+                    <input type="hidden" name="title" value="{{title}}">
+                    <input type="hidden" name="date" value="{{date|date("d/m/Y")}}">
+                </div>
+                <button class="btn btn-success align-self-center mt-3" type="submit">Valider le match</button>
+            </form>
+            
+        </div>
     </div>
 {% endblock %}

@@ -31,6 +31,9 @@ class Tournament
     #[ORM\Column(length: 255)]
     private ?string $Player = null;
 
+    #[ORM\Column]
+    private ?int $arbitre = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -92,6 +95,18 @@ class Tournament
     public function setPlayer(string $Player): static
     {
         $this->Player = $Player;
+
+        return $this;
+    }
+
+    public function getArbitre(): ?int
+    {
+        return $this->arbitre;
+    }
+
+    public function setArbitre(int $arbitre): static
+    {
+        $this->arbitre = $arbitre;
 
         return $this;
     }
