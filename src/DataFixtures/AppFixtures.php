@@ -16,7 +16,7 @@ class AppFixtures extends Fixture
             $student = new Student();
             $student->setNom($faker->firstName);
             $student->setPrenom($faker->lastName);
-            $student->setGroupe($faker->randomElement(['Groupe 1', 'Groupe 2', 'Groupe 3']));
+            $student->setGroupe($faker->randomElement(['Groupe1', 'Groupe2', 'Groupe3']));
             $manager->persist($student);
             $manager->flush();
         }

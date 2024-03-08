@@ -20,7 +20,7 @@
         </ul>
         <ul class="navbar-nav me-4">
         <li class="nav-item dropstart">
-          <a class="nav-link" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><h3><i class="bi bi-person-fill"></i></h3></a>
+          <a class="nav-link" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><h3 data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Connexion"><i class="bi bi-person-fill"></i></h3></a>
           <div class="dropdown-menu mt-1">
           {% if app.user %}
             <a class="dropdown-item" href="{{path('app_logout')}}">Se déconnecter</a>

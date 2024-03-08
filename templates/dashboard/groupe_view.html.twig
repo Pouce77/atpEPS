@@ -1,0 +1,98 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+
+{% include "home/_navbar.html.twig" %}
+{% include "dashboard/_menu.html.twig" %}
+{% include "_flash.html.twig" %}
+
+<div class="container">
+    <div>
+        <h3 class="text-center text-light mt-3">Liste des élèves du groupe <strong class=" text-warning">{{id}}</strong></h3>
+        <div class="d-flex flex-column-reverse flex-md-row">
+        <table class="table table-hover mx-auto mt-4 col-11 col-md-6">
+            <thead>
+                <tr>
+                    <th class="py-1 px-4">Nom</th>
+                    <th class="py-1 px-4">Prénom</th>
+                    <th class="py-1 px-4"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for student in groupe %}
+                <tr>
+                    <td class="py-1 px-4">{{ student.nom }}</td>
+                    <td class="py-1 px-4">{{ student.prenom }}</td>
+                    <td class="py-1 px-4">
+                        <a role="button" class="btn btn-warning btn-sm py-1 mx-2 my-1" data-bs-toggle="modal" data-bs-target="#update{{student.id}}" title="Editer"><i class="fa fa-edit" aria-hidden="true" ></i></a>
+                        <a role="button" class="btn btn-danger btn-sm py-1 mx-2 my-1" data-bs-toggle="modal" data-bs-target="#delete{{student.id}}" title="Supprimer"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                    </td>
+                </tr>
+                <!--update student Modal -->
+                <div class="modal" id="update{{student.id}}">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">                
+                            <div class="modal-header">
+                                <h5 class="modal-title">Modifier l'élève</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true"></span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                {{ render(controller('App\\Controller\\StudentController::update',{'id':student.id})) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--delete student Modal -->
+                <div class="modal" id="delete{{student.id}}">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title text-primary">Suppression de {{student.prenom}} {{ student.nom}} du groupe {{id}}</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true"></span>
+                                </button>
+                            </div>
+                        <div class="modal-body">
+                            <p>
+                                Voulez-vous vraiment supprimer cette élément ?
+                                <br />
+                                Cette action est définitive !
+                            </p>
+                        </div>
+                        <div class="modal-footer">
+                          <a type="button" class="btn btn-warning" href={{ path('app_student_delete', {'id': student.id}) }}>Supprimer</a>
+                          <a type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</a>
+                        </div>
+                     </div>
+                </div>
+                </div>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="mx-3 text-center text-md-start mt-4 col-11 col-md-6">
+            <a class="btn btn-primary w-50" href="#" role="button">Commencer un tournoi avec ce groupe </a>
+            <a class="btn btn-primary w-50 mt-4" href="#" role="button">Voir les résultats de ce groupe </a>
+            <a class="btn btn-primary w-50 mt-4" role="button" data-bs-toggle="modal" data-bs-target="#addModal" title="ajouter">Ajouter un élève au groupe </a>
+            <a class="btn btn-primary w-50 mt-4" href={{path('app_import',{'id':id})}}>Importer une liste de participants</a>
+        </div>
+        </div>
+    </div>
+</div>
+<!--add student Modal -->
+<div class="modal" id="addModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">                
+                <div class="modal-header">
+                    <h5 class="modal-title">Ajouter un élève au groupe</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"></span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                   {{ render(controller('App\\Controller\\StudentController::add',{'groupe':id})) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

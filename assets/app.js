@@ -7,4 +7,9 @@ import './bootstrap.js';
  */
 import './styles/app.css';
 
+
+const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+
+
 console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉');

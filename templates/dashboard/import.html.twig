@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Importer un groupe{% endblock %}
+
+{% block body %}
+{% include "home/_navbar.html.twig" %}
+{% include "dashboard/_menu.html.twig" %}
+
+<div class="container-fluid">
+        <div class="mb-3 mt-4 m-auto w-75 text-dark bg-light rounded p-4">
+            <h4>Importer une liste de participant dans le groupe : {{group}}</h4>
+
+            <div>
+                <p>
+                    Le fichier doit être au format CSV séparer par des virgules.
+                </p>
+
+            <form action={{path('app_csv',{'id':group})}} method="post" enctype="multipart/form-data">
+
+                <label for="myfile" class="form-label mt-2">Importer un fichier au format CSV</label>
+                <input class="form-control w-75" type="file" id="myfile" name='myfile'>
+
+                <button type="submit" class="btn btn-primary mt-4">Importer</button>
+                
+            </form>
+        </div>
+        
+
+    </div>
+
+{% endblock %}

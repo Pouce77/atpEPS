@@ -1,0 +1,9 @@
+{{ form_start(form, {
+    'action' : path('app_student_update',{'id':studentid}),
+    'attr' : {'id' : 'updateform' ~ studentid}
+    }) 
+}}
+{{ form_widget(form) }}
+
+<button type="submit" class="btn btn-primary m-4">Editer</button>
+{{ form_end(form) }}

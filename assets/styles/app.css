@@ -1,13 +1,22 @@
+
 body {
     background-image: url('images/background.png');
     background-size: cover;
-    background-repeat: no-repeat;
+    background-attachment: fixed;
     height: 100vh;
 }
 .groupelink{
     text-decoration: none;
     color: rgb(71, 64, 64);
 }
-.groupelink:hover{
-    color: rgb(163, 163, 163);
+.table{
+    width: auto;
 }
+td{
+    vertical-align: middle;
+}
+.menuItem:hover > a{
+    background-color: rgb(123, 123, 123);
+    color: white;
+}
+
