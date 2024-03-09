@@ -1,0 +1,58 @@
+<div class="modal fade" id="updateTournament" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalToggleLabel">Modifier une ligne</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Quel élève souhaitez-vous modifier ? </p>
+            <select class="form-select" name="updateEleve" id="selectEleve" >
+                    <option value="">Choisir un élève</option>
+                {% for student in tournament %}
+                    <option value="{{student.player}}">{{student.player}}</option>
+                {% endfor %}
+            </select>
+      </div>
+      <div class="modal-footer">
+        <div id="spinner" class="spinner-border" role="status" hidden>
+          <span class="visually-hidden">Loading...</span>
+        </div>
+        <button id="updateButton" class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" hidden>Modifier cet élève</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">Modifier</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="{{path('app_tournament_update')}}" method="post" id="formupdate" class="form-control">
+            <label for='nom' class="d-block">Nom</label>
+            <input type="text" class="rounded d-block" name="nom" value="" id='nomEleve'>
+            <label for="point">Points</label>
+            <input type="number" class="rounded d-block" name="point" id="point">
+            <label for="nbreMatch" class="d-block">Nombre de match</label>
+            <input type="number" class="d-block rounded" name="nbreMatch" id="nbreMatch">
+            <label for="arbitrage" class="d-block">Arbitrage</label>
+            <input type="number" class="rounded d-block" name="arbitrage" id="arbitrage">
+            <label for="goalaverage" class="d-block">Goalaverage</label>
+            <input type="number" class="rounded d-block" name="goalaverage" id="goalaverage">
+            <input type="hidden" name="titre" value="{{title}}">
+            <button class="btn btn-warning btn m-auto mt-4 w-100" role="button" type="submit">Modifier</button> 
+            
+        </form>
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+        <button id="backButton" class="btn btn-primary" data-bs-target="#updateTournament" data-bs-toggle="modal">Changer d'élève</button>
+      </div>
+    </div>
+  </div>
+</div>
+

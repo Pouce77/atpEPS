@@ -34,6 +34,12 @@ class Tournament
     #[ORM\Column]
     private ?int $arbitre = null;
 
+    #[ORM\Column]
+    private ?int $Points = null;
+
+    #[ORM\Column]
+    private ?int $goalaverage = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -107,6 +113,30 @@ class Tournament
     public function setArbitre(int $arbitre): static
     {
         $this->arbitre = $arbitre;
+
+        return $this;
+    }
+
+    public function getPoints(): ?int
+    {
+        return $this->Points;
+    }
+
+    public function setPoints(int $Points): static
+    {
+        $this->Points = $Points;
+
+        return $this;
+    }
+
+    public function getGoalaverage(): ?int
+    {
+        return $this->goalaverage;
+    }
+
+    public function setGoalaverage(int $goalaverage): static
+    {
+        $this->goalaverage = $goalaverage;
 
         return $this;
     }

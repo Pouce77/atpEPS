@@ -12,7 +12,7 @@
   <button class="btn btn-primary m-4">Ajouter un groupe</button>
   <div class="row">
     <div class="col-12 d-flex gap-5 m-4 flex-wrap justify-content-center">
-        {% for groupe in groupes %}
+        {% for groupe in groupes.getGroupes %}
         <div class="card" style="width:18rem;">
             <div class="card-body d-flex flex-column">
                 <h5 class="card-title"><a class="groupelink" href="{{path('app_groupe_view',{'id':groupe})}}">{{groupe}}</a></h5>

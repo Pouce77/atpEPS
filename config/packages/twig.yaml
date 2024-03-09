@@ -1,7 +1,6 @@
 twig:
     file_name_pattern: '*.twig'
     globals:
-        
         groupes: '@App\Service\Getgroupe'
 
 when@test:

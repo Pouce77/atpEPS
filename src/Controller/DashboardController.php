@@ -31,7 +31,7 @@ class DashboardController extends AbstractController
     {
         $groupes = ['Groupe1', 'Groupe2', 'Groupe3'];
         return $this->render('dashboard/groupe.html.twig', [
-            'groupes' => $groupes,
+            
         ]);
     }
 

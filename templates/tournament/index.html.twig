@@ -4,34 +4,56 @@
 
 {% block body %}
 {% include "home/_navbar.html.twig" %}
-{% include "_flash.html.twig" %}
+{% include "tournament/_modalUpdateTournament.html.twig" %}
+{% include "tournament/_modalDeleteTournament.html.twig" %}
 
-<h3 class="text-light mx-4 mt-4">{{title}}</h3>
-<p class="ms-4 text-light"><i>{{date|date("d/m/Y")}}</i></p>
+{% set count = 0 %}
+<div class="d-flex flex-row">
+<div>
+    <h3 class="text-light mx-4 mt-4" id="titre">{{title}}</h3>
+    <p class="ms-4 text-light mb-2"><i>{{date|date("d/m/Y")}}</i></p>
+</div>
+<div class="my-auto ms-4">
+    <span><a class="btn btn-danger btn-sm me-4 my-1" data-bs-toggle="modal" data-bs-target="#deleteTournament" title="Remettre les scores à 0" role="button">Réinitialiser le tournoi</a></span>
+    <span><a class="btn btn-warning btn-sm my-1" data-bs-toggle="modal" data-bs-target="#updateTournament" title="Modifier" role="button">Modifier une ligne</a></span>
+</div>
+</div>
     <div class="d-flex flex-column-reverse flex-xl-row justify-content-start">
         <table class="table table-bordered mt-4 mx-2 col-11 col-md-6">
             <thead>
                 <tr>
                     <th class="py-1 px-4">Classement</th>
                     <th class="py-1 px-4">Nom</th>
-                    <th class="py-1 px-4">Point de classement</th>
-                    <th class="py-1 px-4">Nombre de match</th>
+                    <th class="py-1 px-4">Points de classement</th>
+                    <th class="py-1 px-4">Nombre de matchs</th>
                     <th class="py-1 px-4">Arbitrage</th>
+                    <th class="py-1 px-4">Goalaverage</th>
                 </tr>
             </thead>
             <tbody>
+                {% set tableau = {} %}
                 {% for student in tournament %}
+                {% set count = count + 1 %}
                 <tr>
-                    <td class="py-1 px-4">{{student.classement}}</td>
+                    <td class="py-1 px-4 tdNumber">{{count}}</td>
                     <td class="py-1 px-4">{{ student.player }}</td>
-                    <td class="py-1 px-4"> 12 </td>
-                    <td class="py-1 px-4">{{student.nbreMatch}}</td>
-                    <td class="py-1 px-4">{{student.arbitre}} </td>
+                    <td class="py-1 px-4 tdNumber">{{student.points}}</td>
+                    <td class="py-1 px-4 tdNumber">{{student.nbreMatch}}</td>
+                    <td class="py-1 px-4 tdNumber">{{student.arbitre}} </td>
+                    <td class="py-1 px-4 tdNumber">{{student.goalaverage}}</td>
                 </tr>
+                {% set tableau = tableau|merge({ 
+                    'player' :student.player,
+                    'points' :student.points,
+                    'nbreMatch' :student.nbreMatch,
+                    'arbitre' :student.arbitre,
+                    'goalaverage' :student.goalaverage                
+                    }) %}
+                    
                 {% endfor %}
             </tbody>
         </table>
-        <div class="m-4">
+        <div class="m-4 d-flex flex-column">
             <h3 class="text-center text-light">Match</h3>
 
             <form action="{{path('app_tournament_match')}}" method="post" class="bg-light rounded p-2 d-flex flex-column">
@@ -74,7 +96,8 @@
                 </div>
                 <button class="btn btn-success align-self-center mt-3" type="submit">Valider le match</button>
             </form>
-            
+            {% include "_flash.html.twig" %}
         </div>
+        
     </div>
 {% endblock %}

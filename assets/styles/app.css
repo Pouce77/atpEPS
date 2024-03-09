@@ -15,10 +15,17 @@ body {
 }
 .table{
     width: auto;
+    word-wrap: wrap;
 }
 td{
     vertical-align: middle;
+    width:200px;
 }
+.tdNumber{
+    text-align: center;
+    width:50px;
+}
+
 .menuItem:hover > a{
     background-color: rgb(123, 123, 123);
     color: white;
