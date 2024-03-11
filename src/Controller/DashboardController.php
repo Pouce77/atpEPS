@@ -2,11 +2,18 @@
 
 namespace App\Controller;
 
+use App\Entity\Groupe;
+use App\Form\GroupeType;
+use App\Repository\GroupeRepository;
 use App\Repository\StudentRepository;
 use App\Repository\TournamentRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Console\EventListener\ErrorListener;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class DashboardController extends AbstractController
 {
@@ -27,11 +34,39 @@ class DashboardController extends AbstractController
     }
 
     #[Route('/groupe', name: 'app_groupe')]
-    public function groupe(): Response
+    public function groupe(EntityManagerInterface $em, GroupeRepository $groupeRepository,Request $request,ValidatorInterface $validatorInterface): Response
     {
-        $groupes = ['Groupe1', 'Groupe2', 'Groupe3'];
-        return $this->render('dashboard/groupe.html.twig', [
+        $groupe = new Groupe();
+        
+        $form = $this->createForm(GroupeType::class, $groupe);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid() ){
             
+            $em->persist($groupe);
+            $em->flush();
+        }
+
+        $errors=$validatorInterface->validate($groupe);
+        // Vérifiez s'il y a des erreurs de validation
+        if (count($errors) > 0) {
+            // Construisez un tableau pour stocker les messages d'erreur
+            $errorMessages = [];
+            
+            // Parcourez les erreurs et stockez-les dans le tableau
+            foreach ($errors as $error) {
+                $errorMessages[] = $error->getMessage();
+                dump($error->getMessage());
+            }
+
+            $this->addFlash('danger', implode("\n", $errorMessages));
+        }
+
+        $groupes=$groupeRepository->findAll();
+
+        return $this->render('dashboard/groupe.html.twig', [
+            'form' => $form->createView(),
+            'groups' => $groupes
         ]);
     }
 
@@ -43,5 +78,15 @@ class DashboardController extends AbstractController
             'groupe' => $groupe,
             'id' => $id,
         ]);
+    }
+
+    #[Route('/groupe/delete/{id<\d+>}', name: 'app_groupe_delete')]
+    public function delete(Groupe $groupe, EntityManagerInterface $em, GroupeRepository $groupeRepository): Response
+    {
+        
+        $em->remove($groupe);
+        $em->flush();
+        
+        return $this->redirectToRoute('app_groupe');
     }
 }

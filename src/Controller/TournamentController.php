@@ -7,6 +7,7 @@ use App\Entity\Student;
 use App\Entity\Tournament;
 use App\Repository\StudentRepository;
 use App\Repository\TournamentRepository;
+use App\Service\UpdateClassement;
 use DateTime;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
@@ -68,7 +69,7 @@ class TournamentController extends AbstractController
     }
 
     #[Route('/match', name: 'app_tournament_match')]
-    public function match(Request $request, EntityManagerInterface $em,TournamentRepository $tournamentRepository):Response
+    public function match(Request $request, EntityManagerInterface $em,TournamentRepository $tournamentRepository, UpdateClassement $updateClassement):Response
     {
         $gagnant=$request->request->get('gagnant');
         $perdant=$request->request->get('perdant');
@@ -80,16 +81,20 @@ class TournamentController extends AbstractController
         $date=$request->request->get('date');
         $tournament=$tournamentRepository->findBy(['title'=> $title]);
         
+
         foreach($tournament as $tourna){
+            
            if($tourna->getPlayer()==$gagnant){
                $tourna->setNbreMatch($tourna->getNbreMatch()+1);
                $tourna->setPoints($tourna->getPoints()+3);
                $tourna->setGoalaverage($tourna->getGoalaverage()+$scoreGagnant-$scorePerdant);
+               
             }
             if($tourna->getPlayer()==$perdant){
                 $tourna->setNbreMatch($tourna->getNbreMatch()+1);
                 $tourna->setPoints($tourna->getPoints()+1);
                 $tourna->setGoalaverage($tourna->getGoalaverage()+$scorePerdant-$scoreGagnant);
+                
             }
             if($tourna->getPlayer()==$arbitre){
                 $tourna->setArbitre($tourna->getArbitre()+1);
@@ -106,11 +111,11 @@ class TournamentController extends AbstractController
 
         $em->persist($play);
         $em->flush();
-        
+
+        $updateTournament=$tournamentRepository->findBy(['title'=> $title], ['Points'=>'DESC','goalaverage'=>'DESC']);
+        $updateClassement->update($title,$em,$tournamentRepository);
 
         $this->addFlash('success', 'Match enregistré avec succès');
-
-        $updateTournament=$em->getRepository(Tournament::class)->findBy(['title'=> $title], ['Points'=>'DESC','goalaverage'=>'DESC']);
 
         return $this->render('tournament/index.html.twig', [
             'tournament' => $updateTournament,
@@ -128,18 +133,17 @@ class TournamentController extends AbstractController
         $title=$requ['titre'];
         
         $tournament=$tournamentRepository->findBy(['Player'=> $nomEleve,'title'=>$title]);
-        dump($tournament[0]);
         $point=$tournament[0]->getPoints();
         $nbreMatch=$tournament[0]->getNbreMatch();
         $arbitre=$tournament[0]->getArbitre();
         $goalaverage=$tournament[0]->getGoalaverage();
         $json = json_encode(['point'=>$point,'nbreMatch'=>$nbreMatch,'arbitre'=>$arbitre,'goalaverage'=>$goalaverage]);
-        dump($json);
+
         return new JsonResponse($json);
     }
 
     #[Route('/updateTournament', name: 'app_tournament_update')]
-    public function updateTournament(Request $request, TournamentRepository $tournamentRepository, EntityManagerInterface $em):Response
+    public function updateTournament(Request $request, TournamentRepository $tournamentRepository, EntityManagerInterface $em, UpdateClassement $updateClassement):Response
     {
         $requ=$request->request->all();
         $title=$requ['titre'];
@@ -157,6 +161,8 @@ class TournamentController extends AbstractController
         $em->persist($tournament);
         $em->flush();
         
+        $updateClassement->update($title,$em,$tournamentRepository);
+
         return $this->render('tournament/index.html.twig', [
             'tournament' => $tournamentRepository->findBy(['title'=> $title], ['Points'=>'DESC','goalaverage'=>'DESC']),
             'title' => $title,
@@ -164,5 +170,29 @@ class TournamentController extends AbstractController
 
         ]);
     }    
-}    
 
+    #[
+        Route('/deleteTournament/{title}', name: 'app_tournament_delete')
+    ]
+    public function deleteTournament(string $title, TournamentRepository $tournamentRepository, EntityManagerInterface $em):Response
+    {
+        $tournaments=$tournamentRepository->findBy(['title'=>$title]);
+        foreach($tournaments as $tournament){
+            $tournament->setClassement(1);
+            $tournament->setPoints(0);
+            $tournament->setNbreMatch(0);
+            $tournament->setArbitre(0);
+            $tournament->setGoalaverage(0);
+            $em->persist($tournament);
+        }
+        $em->flush();
+        
+        return $this->render('tournament/index.html.twig', [
+            'tournament' => $tournamentRepository->findBy(['title'=> $title], ['Points'=>'DESC','goalaverage'=>'DESC']),
+            'title' => $title,
+            'date' => $tournament->getCreatedAt()
+
+        ]);
+    }    
+
+}

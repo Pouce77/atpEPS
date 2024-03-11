@@ -1,0 +1,23 @@
+{
+    "abovePoints":
+       [ 
+            {
+            "plus5": 6,
+            "plus4": 5,
+            "plus3": 5,
+            "plus2": 5,
+            "plus1": 4
+            }
+        ],
+    "underPoints":
+        [
+            {
+            "moins5": 2,
+            "moins4": 3,
+            "moins3": 3,
+            "moins2": 3,
+            "moins1": 4
+            }
+        ],
+    "lostPoints":1
+}
