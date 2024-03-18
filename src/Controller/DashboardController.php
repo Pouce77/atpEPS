@@ -20,6 +20,7 @@ class DashboardController extends AbstractController
     #[Route('/dashboard', name: 'app_dashboard')]
     public function index(TournamentRepository $tournamentRepository): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $tournaments=$tournamentRepository->findAll();
         $titles=[];
         foreach ($tournaments as $tournament) {
@@ -36,6 +37,7 @@ class DashboardController extends AbstractController
     #[Route('/groupe', name: 'app_groupe')]
     public function groupe(EntityManagerInterface $em, GroupeRepository $groupeRepository,Request $request,ValidatorInterface $validatorInterface): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $groupe = new Groupe();
         
         $form = $this->createForm(GroupeType::class, $groupe);
@@ -73,6 +75,7 @@ class DashboardController extends AbstractController
     #[Route('/groupe/{id}', name: 'app_groupe_view')]
     public function view(string $id, StudentRepository $student): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $groupe = $student->findBy(['groupe' => $id]);
         return $this->render('dashboard/groupe_view.html.twig', [
             'groupe' => $groupe,
@@ -83,7 +86,7 @@ class DashboardController extends AbstractController
     #[Route('/groupe/delete/{id<\d+>}', name: 'app_groupe_delete')]
     public function delete(Groupe $groupe, EntityManagerInterface $em, GroupeRepository $groupeRepository): Response
     {
-        
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $em->remove($groupe);
         $em->flush();
         

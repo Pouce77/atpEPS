@@ -14,18 +14,17 @@ class ImportCSV
 
   public function import($csv, $group):bool
   {
-    $fileFromCSV=read($csv); 
-    $isVerified=isVerified($fileFromCSV);
+    $lineFromCSV=read($csv); 
+    $isVerified=isVerified($lineFromCSV);
 
     if ($isVerified)
     {
-      foreach ($fileFromCSV as $stud)
+      foreach ($lineFromCSV as $stud)
       {
         if ($stud==false){
-
+          //ignore the empty line
         }else{
         $student=new Student();
-    
         $student->setNom($stud['0']);
         $student->setPrenom($stud['1']);
         $student->setGroupe($group);
@@ -54,14 +53,17 @@ function read($file)
 }
 
 //Check if the file is well formatted
-function isVerified($file):bool
+function isVerified($line):bool
 {
-  foreach ($file as $stud){
+  foreach ($line as $stud){
   if($stud==false)
   {
     //ignore the empty line
   }else{
-    
+      if (count($stud)!=2)
+      {
+        return false;
+      }      
   }
 }
 return true;

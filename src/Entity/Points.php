@@ -5,8 +5,10 @@ namespace App\Entity;
 use App\Repository\PointsRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: PointsRepository::class)]
+#[UniqueEntity(fields: ['user'], message: 'Il y a déjà un utilisateur pour cet option.')]
 class Points
 {
     #[ORM\Id]

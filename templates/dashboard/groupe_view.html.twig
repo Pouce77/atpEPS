@@ -1,6 +1,5 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-
 {% include "home/_navbar.html.twig" %}
 {% include "dashboard/_menu.html.twig" %}
 {% include "_flash.html.twig" %}
@@ -54,10 +53,10 @@
                                 </button>
                             </div>
                         <div class="modal-body">
-                            <p>
+                            <p class="text-danger">
                                 Voulez-vous vraiment supprimer cette élément ?
                                 <br />
-                                Cette action est définitive !
+                                <strong>Cette action est définitive !</strong>
                             </p>
                         </div>
                         <div class="modal-footer">

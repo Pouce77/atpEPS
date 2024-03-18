@@ -7,7 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class OptionService extends AbstractController
 {
-    public function getOptionPoints(): array
+    public function getOptionPoints(): Points
     {
         $points= new Points();
         $json = file_get_contents($this->getParameter('options'));
@@ -16,8 +16,6 @@ class OptionService extends AbstractController
         $points->setUnderPoints($data['underPoints']);
         $points->setMatchLostPoints($data['lostPoints']);
 
-        return [
-            $points
-        ];
+        return $points;
     }
 }

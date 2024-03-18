@@ -1,0 +1,18 @@
+{% extends "base.html.twig" %}
+{% block body %}
+{% include "home/_navbar.html.twig" %}
+{% if app.user %}
+    {% include "dashboard/_menu.html.twig" %}
+{% endif %}
+{% include "_flash.html.twig" %}
+<div>
+    <h2 class="m-auto w-75 text-center text-light mt-3">Laissez-moi un message !</h2>
+</div>
+<div class="m-auto col-10 col-sm-6 border border-dark bg-light rounded p-4 mt-3">
+    {{ form_start(form)}}
+    {{ form_end(form) }}
+</div>
+<footer>
+    {% include "home/_footer.html.twig" %}
+</footer>
+{% endblock %}

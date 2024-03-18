@@ -6,6 +6,7 @@
 {% include "home/_navbar.html.twig" %}
 {% include "tournament/_modalUpdateTournament.html.twig" %}
 {% include "tournament/_modalDeleteTournament.html.twig" %}
+{% include "tournament/_modalCancelLastMatch.html.twig" %}
  {% include "_flash.html.twig" %}
 
 <div class="d-flex flex-row">
@@ -94,8 +95,8 @@
                     <input type="hidden" name="date" value="{{date|date("d/m/Y")}}">
                 </div>
                 <button class="btn btn-success align-self-center mt-3" type="submit">Valider le match</button>
+                <a class="btn btn-danger align-self-center mt-3" data-bs-toggle="modal" data-bs-target="#cancelLastMatch" title="Remettre les scores à 0" role="button">Annuler le dernier match</a>
             </form>
-        </div>
-        
+        </div>  
     </div>
 {% endblock %}

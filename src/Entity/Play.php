@@ -28,6 +28,18 @@ class Play
     #[ORM\Column(length: 255)]
     private ?string $arbitre = null;
 
+    #[ORM\Column]
+    private ?int $classement_gagnant = null;
+
+    #[ORM\Column]
+    private ?int $classement_perdant = null;
+
+    #[ORM\Column]
+    private ?int $pointsGagnant = null;
+
+    #[ORM\Column]
+    private ?int $pointsPerdant = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -89,6 +101,54 @@ class Play
     public function setArbitre(string $arbitre): static
     {
         $this->arbitre = $arbitre;
+
+        return $this;
+    }
+
+    public function getClassementGagnant(): ?int
+    {
+        return $this->classement_gagnant;
+    }
+
+    public function setClassementGagnant(int $classement_gagnant): static
+    {
+        $this->classement_gagnant = $classement_gagnant;
+
+        return $this;
+    }
+
+    public function getClassementPerdant(): ?int
+    {
+        return $this->classement_perdant;
+    }
+
+    public function setClassementPerdant(int $classement_perdant): static
+    {
+        $this->classement_perdant = $classement_perdant;
+
+        return $this;
+    }
+
+    public function getPointsGagnant(): ?int
+    {
+        return $this->pointsGagnant;
+    }
+
+    public function setPointsGagnant(int $pointsGagnant): static
+    {
+        $this->pointsGagnant = $pointsGagnant;
+
+        return $this;
+    }
+
+    public function getPointsPerdant(): ?int
+    {
+        return $this->pointsPerdant;
+    }
+
+    public function setPointsPerdant(int $pointsPerdant): static
+    {
+        $this->pointsPerdant = $pointsPerdant;
 
         return $this;
     }

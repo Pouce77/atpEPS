@@ -30,4 +30,19 @@ td{
     background-color: rgb(123, 123, 123);
     color: white;
 }
-
+.footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+   
+}
+.banner{
+    background-color: rgba(33, 150, 243, 0.8);
+}
+.link{
+    color:whitesmoke;
+}
+.link:hover{
+    color:rgb(63, 62, 62);
+    cursor: pointer;
+}
