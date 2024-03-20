@@ -17,7 +17,6 @@ console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉');
     const select=document.getElementById("selectEleve");
     const tit=document.getElementById("titre");
     let titre=tit.innerText
-    console.log('titre')
     
     select.addEventListener("change", 
         async function(){

@@ -1,19 +1,19 @@
-<div class="modal fade" id="deleteTournament">
+<div class="modal fade" id="deleteTournamentModal{{loop.index}}">
     <div class="modal-dialog" role="document">
         <div class="modal-content">                
             <div class="modal-header">
-                <h5 class="modal-title">Remettre les scores à 0</h5>
+                <h5 class="modal-title">Supprimer le tournoi</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true"></span>
                 </button>
             </div>
             <div class="modal-body">
-                <p>Souhaitez-vous vraiement remettre tous les scores à 0 ? </p>
+                 <p>Souhaitez-vous vraiement supprimer le groupe {{tournament.title}} ? </p>
                 <p class="text-danger"><strong>Attention cette action est irréversible !</strong></p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                <a href="{{path('app_tournament_delete',{'title': title})}}" class="btn btn-danger">Remettre à 0</a>
+            <button type="button" class="btn btn-secondary m-4" data-bs-dismiss="modal">Annuler</button>
+            <a type="text" class="btn btn-primary m-4" href="{{path('app_tournament_delete',{'title':tournament.title})}}">Supprimer</a>
             </div>
         </div>
     </div>

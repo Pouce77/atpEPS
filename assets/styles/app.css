@@ -1,9 +1,13 @@
-
+html {
+    height: 100%;
+}
 body {
     background-image: url('images/background.png');
     background-size: cover;
     background-attachment: fixed;
-    height: 100vh;
+    position : relative;
+    min-height: 100%;
+    padding-bottom: 6em;
 }
 .groupelink{
     text-decoration: none;
@@ -31,10 +35,9 @@ td{
     color: white;
 }
 .footer {
-    position: fixed;
+    position: absolute;
     bottom: 0;
     width: 100%;
-   
 }
 .banner{
     background-color: rgba(33, 150, 243, 0.8);

@@ -23,14 +23,16 @@ class DashboardController extends AbstractController
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $tournaments=$tournamentRepository->findAll();
         $titles=[];
+        $tourns=[];
         foreach ($tournaments as $tournament) {
             if(!in_array($tournament->getTitle(),$titles)){
                 array_push($titles,$tournament->getTitle());
+                array_push($tourns,$tournament);
             }
         }
         
         return $this->render('dashboard/index.html.twig', [
-            'titles' => $titles
+            'tournaments' => $tourns,
         ]);
     }
 

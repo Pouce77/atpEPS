@@ -1,0 +1,21 @@
+<div class="modal fade" id="modalStart" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Démarrer un tournoi avec le groupe {{id}}</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+       <form action="{{path('app_tournament')}}", method="post">
+          <input type="hidden" name="groupe" value='{{id}}'>
+          <label for="title" class="form-label mt-4">Titre du tournoi (Lettres, chiffres, espace ou -)</label>
+          <input type="text" id="title" name='title' class="form-control" pattern="[a-zA-Z 0-9-]*" required>
+          <label for="points" class="form-label mt-4">Points de chaque participant au début du tournoi (0 par défaut)</label>
+          <input type="number" id="points" name='points' class="form-control" value=0>
+          <button type="button" class="btn btn-secondary m-4" data-bs-dismiss="modal">Annuler</button>
+          <button type="submit" class="btn btn-primary m-4">Démarrer</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -25,6 +25,7 @@ class TournamentController extends AbstractController
         $this->denyAccessUnlessGranted('ROLE_USER');
         $groupe=$request->request->get('groupe');
         $title=$request->request->get('title');
+        $points=$request->request->get('points');
         $tournament = new Tournament();
         $students=$studentRepository->findBy(['groupe'=>$groupe]);
 
@@ -36,7 +37,7 @@ class TournamentController extends AbstractController
             $tournament->setClassement(1);
             $tournament->setPlayer($student->getNom().' '.$student->getPrenom());
             $tournament->setArbitre(0);
-            $tournament->setPoints(0);
+            $tournament->setPoints($points);
             $tournament->setGoalaverage(0);
 
             $em->persist($tournament);
@@ -192,7 +193,7 @@ class TournamentController extends AbstractController
         ]);
     }    
 
-    #[Route('/deleteTournament/{title}', name: 'app_tournament_delete')]
+    #[Route('/resetTournament/{title}', name: 'app_reset_delete')]
     public function deleteTournament(string $title, TournamentRepository $tournamentRepository, EntityManagerInterface $em):Response
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
@@ -259,6 +260,19 @@ class TournamentController extends AbstractController
         return $this->redirectToRoute('app_tournament_view', [
             'title' => $title
         ]);
+    }
+
+    #[Route('/deleteTournament/{title}', name: 'app_tournament_delete')]
+    public function delete(string $title, EntityManagerInterface $em, TournamentRepository $tournamentRepository):Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+        $tournaments=$tournamentRepository->findBy(['title'=>$title]);
+        foreach($tournaments as $tournament){
+            $em->remove($tournament);
+        }
+        $em->flush();
+        
+        return $this->redirectToRoute('app_dashboard');
     }
 
 }
