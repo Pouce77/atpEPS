@@ -1,0 +1,27 @@
+<div class="container">
+<h2 style="text-align:center;">{{title}}</h2>
+<table style="border: 1px solid black;border-collapse:collapse;">
+            <thead style="border: 1px solid black;border-collapse:collapse;">
+                <tr style="border: 1px solid black;border-collapse:collapse;">
+                    <th style="border: 1px solid black;border-collapse:collapse;text-align: center;">Classement</th>
+                    <th style="border: 1px solid black;border-collapse:collapse;text-align: center;">Nom</th>
+                    <th style="border: 1px solid black;border-collapse:collapse;text-align: center;">Points de classement</th>
+                    <th style="border: 1px solid black;border-collapse:collapse;text-align: center;">Nombre de matchs</th>
+                    <th style="border: 1px solid black;border-collapse:collapse;text-align: center;">Arbitrage</th>
+                    <th style="border: 1px solid black;border-collapse:collapse;text-align: center;">Goalaverage</th>
+                </tr>
+            </thead>
+            <tbody style="border: 1px solid black;border-collapse:collapse;">
+                {% for student in tournaments %}
+                <tr style="border: 1px solid black;border-collapse:collapse;">
+                    <td style="border: 1px solid black;border-collapse:collapse;text-align: center;">{{student.classement}}</td>
+                    <td style="border: 1px solid black;border-collapse:collapse;text-align: center;">{{ student.player }}</td>
+                    <td style="border: 1px solid black;border-collapse:collapse;text-align: center;">{{student.points}}</td>
+                    <td style="border: 1px solid black;border-collapse:collapse;text-align: center;">{{student.nbreMatch}}</td>
+                    <td style="border: 1px solid black;border-collapse:collapse;text-align: center;">{{student.arbitre}} </td>
+                    <td style="border: 1px solid black;border-collapse:collapse;text-align: center;">{{student.goalaverage}}</td>
+                </tr>                    
+                {% endfor %}
+            </tbody>
+        </table>
+</div>
