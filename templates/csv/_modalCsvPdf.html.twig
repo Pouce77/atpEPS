@@ -1,0 +1,19 @@
+<div class="modal fade" id="csvPdfModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">                
+            <div class="modal-header">
+                <h5 class="modal-title">Partager le tournoi</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"></span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <a type="button" class="m-4 btn btn-success" href="{{path('app_create_csv',{'title':title})}}"><i class="bi bi-filetype-csv me-3"></i>Partager un fichier CSV</a>
+                <a type="button" class="m-4 btn btn-warning" href="{{path('app_pdf',{'title':title})}}"><i class="bi bi-file-pdf me-3"></i>Partager un fichier PDF</a>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary m-4" data-bs-dismiss="modal">Annuler</button>
+            </div>
+        </div>
+    </div>
+</div>

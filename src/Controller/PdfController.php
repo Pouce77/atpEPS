@@ -14,9 +14,11 @@ class PdfController extends AbstractController
     public function index(string $title,PdfCreator $pdfCreator,TournamentRepository $tournamentRepository): Response
     {
         $tournaments=$tournamentRepository->findby(['title'=>$title],['Points'=>'DESC','goalaverage'=>'DESC']);
+        $date=$tournaments[0]->getCreatedAt();
         $html = $this->renderView('pdf/index.html.twig', [
             'tournaments' => $tournaments,
-            'title' => $title
+            'title' => $title,
+            'date' => $date
         ]);
         $pdf = $pdfCreator->createPdf($html);
         return new Response($pdf->output(), 200, [
