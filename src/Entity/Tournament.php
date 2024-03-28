@@ -40,6 +40,10 @@ class Tournament
     #[ORM\Column]
     private ?int $goalaverage = null;
 
+    #[ORM\ManyToOne(inversedBy: 'tournaments')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -137,6 +141,18 @@ class Tournament
     public function setGoalaverage(int $goalaverage): static
     {
         $this->goalaverage = $goalaverage;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
 
         return $this;
     }

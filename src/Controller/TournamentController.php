@@ -39,6 +39,7 @@ class TournamentController extends AbstractController
             $tournament->setArbitre(0);
             $tournament->setPoints($points);
             $tournament->setGoalaverage(0);
+            $tournament->setUser($this->getUser());
 
             $em->persist($tournament);
             $em->flush();        

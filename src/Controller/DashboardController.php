@@ -20,8 +20,8 @@ class DashboardController extends AbstractController
     #[Route('/dashboard', name: 'app_dashboard')]
     public function index(TournamentRepository $tournamentRepository): Response
     {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-        $tournaments=$tournamentRepository->findAll();
+        $this->denyAccessUnlessGranted('ROLE_USER');
+        $tournaments=$tournamentRepository->findBy(['user'=> $this->getUser()]);
         $titles=[];
         $tourns=[];
         foreach ($tournaments as $tournament) {
