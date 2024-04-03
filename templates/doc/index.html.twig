@@ -1,0 +1,132 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}Documentation{% endblock %}
+
+{% block body %}
+{% include "home/_navbar.html.twig" %}
+{% if app.user %}
+    {% include "dashboard/_menu.html.twig" %}
+{% endif %}
+{% include "home/_footer.html.twig" %}
+
+<div class="container w-75 m-auto bg-light pt-4">
+    <nav class="mb-4">
+        <ul class="list-unstyled">
+            <li class="text-center my-2">
+                <a class="linkDoc" href="#compte">Créer un compte</a>
+            </li>
+            <li class="text-center my-2">
+                <a class="linkDoc" href="#groupes">Mes groupes</a>
+            </li>
+            <li class="text-center my-2">
+                <a class="linkDoc" href="#tournois">Mes tournois</a>
+            </li>
+            <li class="text-center my-2">
+                <a class="linkDoc" href="#demarrer">Démarrer un tournoi</a>
+            </li>
+            <li class="text-center mt-2">
+                <a class="linkDoc" href="#options">Options</a>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="border-top">
+        <h3 class="mt-4" id="compte">Créer un compte</h3>
+        <div class="m-4 docBG border rounded p-4">
+            <p>Pour s’inscrire, il faut cliquer sur le bouton « créer un compte ».</p>
+            <img  class="col-12 col-sm-5 mb-2" src="{{asset('styles/images/creerCompte.png')}}" alt="créer un compte">
+
+            <p>Le formulaire d’inscription demande un mail et un mot de passe.</p>
+            <p>
+                Une fois l’inscription saisie, un mail est envoyé à l’utilisateur afin de valider son compte.
+                <br>
+                Une fois le compte créer, il faut se connecter pour avoir accès aux différentes fonctionnalités du site.
+            </p>
+            <p>Il est possible de changer son mot de passe en cliquant sur le lien mot de passe oublié sur le formulaire de connexion. L’email du compte doit être renseigné pour obtenir le lien de réinitialisation de mot de passe.</p>
+            <img  class="col-12 col-sm-5 mb-2" src="{{asset('styles/images/passOublie.png')}}" alt="créer un compte">
+        </div>
+    </div>
+    <div class="m-4 text-center">
+        <a href="#"><i class="bi bi-chevron-up"></i></a>
+    </div>
+    <div class="border-top">
+        <h3 class="mt-4" id="groupes">Mes groupes</h3>
+        <div class="m-4 docBG border rounded p-4">
+        <p>Pour créer un tournoi, il est nécessaire d’avoir d’abord enregistré un groupe de participants au tournoi.</p>
+        <p>Pour créer ce groupe, il faut aller dans Mes groupes > Ajouter un groupe.</p>
+        <img  class="col-12 col-sm-5 mb-2" src="{{asset('styles/images/ajoutGroupe.png')}}" alt="créer un compte">
+        <p>Vous pouvez ajouter des éléments au groupe, les modifier ou les supprimer.</p>
+        <p>Vous pouvez également ajouter plusieurs éléments en même temps en important un fichier CSV.</p>
+        <p>Le fichier CSV importé doit respecter le format suivant : </p>
+        <img  class="col-12 col-sm-5 mb-2" src="{{asset('styles/images/codeCSV.png')}}" alt="créer un compte">
+        <p>Pour chaque groupe, vous pouvez démarrer un tournoi directement.</p>
+        </div>
+    </div>
+    <div class="m-4 text-center">
+        <a href="#"><i class="bi bi-chevron-up"></i></a>
+    </div>
+    <div class="border-top">
+        <h3 class="mt-4" id="tournois">Mes tournois</h3>
+        <div class="m-4 docBG border rounded p-4">
+            <p>Le tableau de bord présente les tournois enregistrés par l’utilisateur s’il y en a.</p>
+            <p>Vous pouvez redémarrer un tournoi en cliquant dessus.</p>
+            <p>Vous pouvez supprimer les différents tournois que vous n’utilisez plus.</p>
+            <p>Pour démarrer un tournoi, cliquez dans la barre de menu sur le bouton associé.</p>
+            <p>Le formulaire de création de tournoi vous demande avec quel groupe vous souhaitez démarrer le tournoi ainsi que le nom du tournoi et les points attribués aux participants au début du tournoi.</p>
+            <img  class="col-12 col-sm-5 mb-2" src="{{asset('styles/images/formulaireTournoi.png')}}" alt="créer un compte">
+        </div>
+    </div>
+    <div class="m-4 text-center">
+        <a href="#"><i class="bi bi-chevron-up"></i></a>
+    </div>
+    <div class="border-top">
+        <h3 class="mt-4" id="demarrer">Démarrer un tournoi</h3>
+        <div class="m-4 docBG border rounded p-4">
+            <h5>Les matchs</h5>
+            <p>Dés que la page du tournoi est lancée, vous pouvez démarrer un match.</p>
+            <p>Pour chaque match, il faudra renseigner : le gagnant, le perdant, le score du gagnant, le score du perdant et l’arbitre s’il y en a un.</p>
+            <img  class="col-12 col-sm-5 mb-2" src="{{asset('styles/images/CaptureMatch.png')}}" alt="créer un compte">
+            <p>Vous pouvez en cas d’erreur annuler le dernier match.</p>
+
+            <p>
+                <i>
+                    Règlement possible : Un participant doit défier un adversaire. 
+                    <br>
+                    Possibilité de défier seulement un adversaire situé 5 places au-dessus ou 5 places en-dessous de lui.
+                </i>
+            </p>
+
+            <p>Le classement se fait en fonction des points gagnés par match. Les points peuvent être modifiés dans l’onglet « Options ». Le score s’il est renseigné permet d’obtenir le goalaverage en cas d’égalité de points.</p>
+            <p>Un participant qui arbitre voit son compte d’arbitrage augmenter de 1 point à chaque fois qu’il arbitre un match.</p>
+            <p>Le nombre de match s’incrémente à chaque match joué.</p>
+            <img  class="col-12 col-sm-5 mb-2" src="{{asset('styles/images/CaptureTournoi.png')}}" alt="créer un compte">
+
+            <h5>Les différentes boutons</h5>
+
+            <p>Vous pouvez réinitialiser le tournoi, les différents points se réinitialiseront à 0.</p>
+            <p>Vous pouvez modifier une ligne en cours de tournoi.</p>
+            <p>Vous pouvez, partager le tournoi : deux formats sont proposés CSV ou PDF.</p>
+            <img  class="col-12 col-sm-5 mb-2" src="{{asset('styles/images/boutonOption.png')}}" alt="créer un compte">
+        </div>
+    </div>
+    <div class="m-4 text-center">
+        <a href="#"><i class="bi bi-chevron-up"></i></a>
+    </div>
+    <div class="border-top">
+        <h3 class="mt-4" id="options">Options</h3>
+        <div class="m-4 docBG border rounded p-4">
+            <p>Cet item permet de modifier la répartition des points gagnés ou perdus en fonction du classement et de la place de l’adversaire.</p>
+            <img  class="col-12 col-sm-5 mb-2" src="{{asset('styles/images/CaptureOptions.png')}}" alt="créer un compte">
+            <P>La répartition des points est spécifique à l’utilisateur et est sauvegardée.</p>
+            <P>la répartition des points s’applique à tous les tournois.</p>
+            <P>Elle ne doit pas être modifiée en cours de tournoi sous peine de se retrouver avec des résultats faussés.</p>
+        </div>
+    </div>
+    <div class="m-4 text-center pb-4">
+        <a href="#">Retour en haut de page</a>
+    </div>
+</div>
+
+
+{% endblock %}

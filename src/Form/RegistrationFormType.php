@@ -28,7 +28,7 @@ class RegistrationFormType extends AbstractType
                 'label' => 'Accepter les conditions d\'utilisation',
                 'label_attr' => ['class' => 'form-check-label'],
                 'row_attr' => ['class' => 'form-check'],
-                'attr' => ['class' => 'form-check- m-4'],
+                'attr' => ['class' => 'm-4'],
                 'mapped' => false,
                 'constraints' => [
                     new IsTrue([
