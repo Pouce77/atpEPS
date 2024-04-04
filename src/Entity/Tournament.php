@@ -35,7 +35,7 @@ class Tournament
     private ?int $arbitre = null;
 
     #[ORM\Column]
-    private ?int $Points = null;
+    private ?float $Points = null;
 
     #[ORM\Column]
     private ?int $goalaverage = null;
@@ -121,12 +121,12 @@ class Tournament
         return $this;
     }
 
-    public function getPoints(): ?int
+    public function getPoints(): ?float
     {
         return $this->Points;
     }
 
-    public function setPoints(int $Points): static
+    public function setPoints(float $Points): static
     {
         $this->Points = $Points;
 

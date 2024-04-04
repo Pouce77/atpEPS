@@ -95,7 +95,9 @@ class TournamentController extends AbstractController
 
         //On utilise le service GetPointsForClassement pour récupérer les points à attribuer au gagnant et au perdant
         $pointsGagnant=$getPointsForClassement->getPointsGagant($diffClassement,$this->getUser());
+        dump($pointsGagnant);
         $pointsPerdant=$getPointsForClassement->getMatchLostPoints($this->getUser());
+       
        
         //On met à jour les entités gagnant et perdant
         $tournamentGagnant->setPoints($tournamentGagnant->getPoints()+$pointsGagnant);

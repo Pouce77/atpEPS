@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Positive;
 
 class PointsType extends AbstractType
 {
@@ -23,12 +24,14 @@ class PointsType extends AbstractType
                 'entry_options' => [
                     'attr' => ['class' => 'm-1 rounded','type'=>'number'],
                 ],
+                
             ])
             ->add('underPoints',CollectionType::class,[
                 'label' => 'Points gagnés pour un adversaire classé au-dessous avec un écart de :',
                 'entry_options' => [
                     'attr' => ['class' => 'm-1 rounded', 'type'=>'number'],
                 ],
+                
             ])
             ->add('matchLostPoints',NumberType::class,[
                 'label' => 'Point(s) pour un match perdu',

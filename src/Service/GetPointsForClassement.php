@@ -15,7 +15,7 @@ class GetPointsForClassement
         
     }
 
-    public function getPointsGagant($diff,$user): int
+    public function getPointsGagant($diff,$user)
     {
         global $pointGagnant;
         $points=$this->pointsRepository->findOneBy(['user'=>$user]);
@@ -61,6 +61,7 @@ class GetPointsForClassement
          {
               $pointGagnant=$points->getAbovePoints()['1'];
          }
+        dump($pointGagnant);
         return $pointGagnant;
     }
 
