@@ -6,6 +6,12 @@
 {% include "home/_navbar.html.twig" %}
 {% include "dashboard/_menu.html.twig" %}
 {% include "_flash.html.twig" %}
+<nav class='ariane m-2 sourceCode slide-in-right' aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a class="text-decoration-none link" href="{{path('app_groupe_view',{'id':group})}}">Retour vers {{group}}</a></li>
+          
+        </ol>
+</nav>
 <div class="container-fluid">
         <div class="mb-3 mt-4 m-auto w-75 text-dark bg-light rounded p-4">
             <h4>Importer une liste de participant dans le groupe : {{group}}</h4>
