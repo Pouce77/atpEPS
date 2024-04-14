@@ -33,9 +33,7 @@ console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉');
             }).then((response) => {
                 return response.json();
             }).then((data) => {
-                console.log(data);
                 let datas=JSON.parse(data);
-                console.log(datas);
                 document.getElementById("point").value=datas.point;
                 document.getElementById("nbreMatch").value=datas.nbreMatch;
                 document.getElementById("arbitrage").value=datas.arbitre;
@@ -53,3 +51,5 @@ console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉');
     backbutton.addEventListener("click", function(){
         document.getElementById("updateButton").setAttribute("hidden",true);
     })
+
+    

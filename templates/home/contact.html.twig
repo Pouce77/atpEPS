@@ -1,5 +1,6 @@
 {% extends "base.html.twig" %}
 {% block body %}
+
 {% include "home/_navbar.html.twig" %}
 {% if app.user %}
     {% include "dashboard/_menu.html.twig" %}
@@ -16,4 +17,5 @@
 <footer>
     {% include "home/_footer.html.twig" %}
 </footer>
+
 {% endblock %}

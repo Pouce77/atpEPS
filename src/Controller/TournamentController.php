@@ -27,7 +27,7 @@ class TournamentController extends AbstractController
         $title=$request->request->get('title');
         $points=$request->request->get('points');
         $tournament = new Tournament();
-        $students=$studentRepository->findBy(['groupe'=>$groupe]);
+        $students=$studentRepository->findBy(['groupe'=>$groupe, 'user'=>$this->getUser()]);
 
         foreach ($students as $student) {
             $tournament = new Tournament();
@@ -45,11 +45,12 @@ class TournamentController extends AbstractController
             $em->flush();        
         }
 
-        $tournament=$em->getRepository(Tournament::class)->findBy(['title'=> $title],['Points'=>'DESC','goalaverage'=>'DESC']);
-        $date=$tournament[0]->getCreatedAt();
+        $tournoi=$em->getRepository(Tournament::class)->findBy(['title'=> $title,'user'=>$this->getUser()],['Points'=>'DESC','goalaverage'=>'DESC']);
+
+        $date=$tournoi[0]->getCreatedAt();
 
         return $this->render('tournament/index.html.twig', [
-            'tournament' => $tournament,
+            'tournament' => $tournoi,
             'title' => $title,
             'date' => $date
         ]);
@@ -60,9 +61,8 @@ class TournamentController extends AbstractController
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
         str_replace('%20',' ',$title);
-        $tournament=$em->getRepository(Tournament::class)->findBy(['title'=> $title], ['Points'=>'DESC','goalaverage'=>'DESC']);
+        $tournament=$em->getRepository(Tournament::class)->findBy(['title'=> $title,'user'=>$this->getUser()], ['Points'=>'DESC','goalaverage'=>'DESC']);
         $date=$tournament[0]->getCreatedAt();
-      
         return $this->render('tournament/index.html.twig', [
             'tournament' => $tournament,
             'title' => $title,
@@ -84,18 +84,17 @@ class TournamentController extends AbstractController
         $title=$request->request->get('title');
         
         //On récupère l'entité gagnant et perdant dans la base
-        $tournamentGagnant=$tournamentRepository->findOneBy(['title'=> $title,'Player'=>$gagnant]);
+        $tournamentGagnant=$tournamentRepository->findOneBy(['title'=> $title,'Player'=>$gagnant,'user'=>$this->getUser()]);
         $classGagnant=$tournamentGagnant->getClassement();
         
-        $tournamentPerdant=$tournamentRepository->findOneBy(['title'=> $title,'Player'=>$perdant]);
+        $tournamentPerdant=$tournamentRepository->findOneBy(['title'=> $title,'Player'=>$perdant,'user'=>$this->getUser()]);
         $classPerdant=$tournamentPerdant->getClassement();
         
         //On calcule la différence entre le classement du gagnant et celui du perdant
         $diffClassement=$classGagnant-$classPerdant;
-
+    
         //On utilise le service GetPointsForClassement pour récupérer les points à attribuer au gagnant et au perdant
         $pointsGagnant=$getPointsForClassement->getPointsGagant($diffClassement,$this->getUser());
-        dump($pointsGagnant);
         $pointsPerdant=$getPointsForClassement->getMatchLostPoints($this->getUser());
        
        
@@ -110,7 +109,7 @@ class TournamentController extends AbstractController
 
         //On met à jour l'entité arbitre
         if(!str_contains($arbitre,'aucun')){
-        $arbitreTournament=$tournamentRepository->findOneBy(['title'=> $title,'Player'=>$arbitre]);
+        $arbitreTournament=$tournamentRepository->findOneBy(['title'=> $title,'Player'=>$arbitre,'user'=>$this->getUser()]);
         $arbitreTournament->setArbitre($arbitreTournament->getArbitre()+1);
         $em->persist($arbitreTournament);
         }
@@ -134,8 +133,8 @@ class TournamentController extends AbstractController
         $em->persist($play);
         $em->flush();
 
-        $updateTournament=$tournamentRepository->findBy(['title'=> $title], ['Points'=>'DESC','goalaverage'=>'DESC']);
-        $updateClassement->update($title,$em,$tournamentRepository);
+        $updateTournament=$tournamentRepository->findBy(['title'=> $title,'user'=>$this->getUser()], ['Points'=>'DESC','goalaverage'=>'DESC']);
+        $updateClassement->update($title,$em,$tournamentRepository,$this->getUser());
 
         $this->addFlash('success', 'Match enregistré avec succès, '.$gagnant.' a obtenu '.$pointsGagnant.' points et '.$perdant.' a obtenu '.$pointsPerdant.' points.');
 
@@ -173,7 +172,7 @@ class TournamentController extends AbstractController
         $requ=$request->request->all();
         $title=$requ['titre'];
         $player=$requ['nom'];
-        $tournament=$tournamentRepository->findOneBy(['Player'=> $player,'title'=>$title]);
+        $tournament=$tournamentRepository->findOneBy(['Player'=> $player,'title'=>$title,'user'=>$this->getUser()]);
 
         $tournament->setPoints($requ['point']);
         $tournament->setNbreMatch($requ['nbreMatch']);
@@ -186,10 +185,10 @@ class TournamentController extends AbstractController
         $em->persist($tournament);
         $em->flush();
         
-        $updateClassement->update($title,$em,$tournamentRepository);
+        $updateClassement->update($title,$em,$tournamentRepository,$this->getUser());
 
         return $this->render('tournament/index.html.twig', [
-            'tournament' => $tournamentRepository->findBy(['title'=> $title], ['Points'=>'DESC','goalaverage'=>'DESC']),
+            'tournament' => $tournamentRepository->findBy(['title'=> $title,'user'=>$this->getUser()], ['Points'=>'DESC','goalaverage'=>'DESC']),
             'title' => $title,
             'date' => $date
 
@@ -200,7 +199,7 @@ class TournamentController extends AbstractController
     public function deleteTournament(string $title, TournamentRepository $tournamentRepository, EntityManagerInterface $em):Response
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
-        $tournaments=$tournamentRepository->findBy(['title'=>$title]);
+        $tournaments=$tournamentRepository->findBy(['title'=>$title,'user'=>$this->getUser()]);
         foreach($tournaments as $tournament){
             $tournament->setClassement(1);
             $tournament->setPoints(0);
@@ -212,7 +211,7 @@ class TournamentController extends AbstractController
         $em->flush();
         
         return $this->render('tournament/index.html.twig', [
-            'tournament' => $tournamentRepository->findBy(['title'=> $title], ['Points'=>'DESC','goalaverage'=>'DESC']),
+            'tournament' => $tournamentRepository->findBy(['title'=> $title,'user'=>$this->getUser()], ['Points'=>'DESC','goalaverage'=>'DESC']),
             'title' => $title,
             'date' => $tournament->getCreatedAt()
 
@@ -236,9 +235,9 @@ class TournamentController extends AbstractController
         $pointsPerdant=$play->getPointsPerdant();
         $arbitre=$play->getArbitre();
 
-        $tournamentGagnant=$em->getRepository(Tournament::class)->findOneBy(['title'=> $title,'Player'=>$gagnant]);
-        $tournamentPerdant=$em->getRepository(Tournament::class)->findOneBy(['title'=> $title,'Player'=>$perdant]);
-        $arbitreTournament=$em->getRepository(Tournament::class)->findOneBy(['title'=> $title,'Player'=>$arbitre]);
+        $tournamentGagnant=$em->getRepository(Tournament::class)->findOneBy(['title'=> $title,'Player'=>$gagnant,'user'=>$this->getUser()]);
+        $tournamentPerdant=$em->getRepository(Tournament::class)->findOneBy(['title'=> $title,'Player'=>$perdant,'user'=>$this->getUser()]);
+        $arbitreTournament=$em->getRepository(Tournament::class)->findOneBy(['title'=> $title,'Player'=>$arbitre,'user'=>$this->getUser()]);
 
         $tournamentGagnant->setPoints($tournamentGagnant->getPoints()-$pointsGagnant);
         $tournamentGagnant->setNbreMatch($tournamentGagnant->getNbreMatch()-1);
@@ -269,7 +268,7 @@ class TournamentController extends AbstractController
     public function delete(string $title, EntityManagerInterface $em, TournamentRepository $tournamentRepository):Response
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
-        $tournaments=$tournamentRepository->findBy(['title'=>$title]);
+        $tournaments=$tournamentRepository->findBy(['title'=>$title,'user'=>$this->getUser()]);
         foreach($tournaments as $tournament){
             $em->remove($tournament);
         }

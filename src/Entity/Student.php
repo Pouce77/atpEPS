@@ -23,6 +23,9 @@ class Student
 
     #[ORM\Column(length: 255)]
     private ?string $groupe = null;
+
+    #[ORM\ManyToOne(inversedBy: 'students')]
+    private ?User $user = null;
     
 
     public function getId(): ?int
@@ -62,6 +65,18 @@ class Student
     public function setGroupe(string $groupe): static
     {
         $this->groupe = $groupe;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
 
         return $this;
     }

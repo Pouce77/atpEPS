@@ -34,7 +34,7 @@
        <p>Avec quel groupe souhaitez-vous démarrer un tournoi ?</p>
        <form action="{{path('app_tournament')}}", method="post">
           <select name="groupe" class="form-select" aria-label="Default select example">
-            {% for groupe in groupes.getGroupes %}
+            {% for groupe in groupes.getGroupes(app.user) %}
               <option value="{{groupe}}">{{groupe}}</option>
             {% endfor %}
           </select>

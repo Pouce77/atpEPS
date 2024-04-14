@@ -24,6 +24,7 @@ class StudentController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid()){
             $student->setGroupe($groupe);
+            $student->setUser($this->getUser());
             $em=$doctrine->getManager();
             $em->persist($student);
             $em->flush();

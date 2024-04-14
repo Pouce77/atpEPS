@@ -26,7 +26,7 @@ class Points
     private array $underPoints = [];
 
     #[ORM\Column]
-    private ?int $matchLostPoints = null;
+    private ?float $matchLostPoints = null;
 
     public function getId(): ?int
     {
@@ -69,12 +69,12 @@ class Points
         return $this;
     }
 
-    public function getMatchLostPoints(): ?int
+    public function getMatchLostPoints(): ?float
     {
         return $this->matchLostPoints;
     }
 
-    public function setMatchLostPoints(int $matchLostPoints): static
+    public function setMatchLostPoints(float $matchLostPoints): static
     {
         $this->matchLostPoints = $matchLostPoints;
 

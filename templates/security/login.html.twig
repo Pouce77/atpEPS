@@ -25,8 +25,13 @@
     <label for="inputEmail" class="form-label">Email</label>
     <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control mb-4" autocomplete="email" required autofocus>
     <label for="inputPassword" class="form-label">Mot de passe</label>
+    <div class="input-group">
     <input type="password" name="password" id="inputPassword" class="form-control mb-4" autocomplete="current-password" required>
-
+        <span role="button" class="input-group-text" onclick="togglePassword()">
+            <i class="bi bi-eye" id="eye"></i>
+            <i class="bi bi-eye-slash d-none" id="eye-slash"></i>
+        </span>
+    </div>
     <input type="hidden" name="_csrf_token"
            value="{{ csrf_token('authenticate') }}"
     >
@@ -38,5 +43,15 @@
     <a href="{{path('app_register')}}">Pas encore inscrit ?</a>
     </div>
 </form>
-
+<script>
+// eyes at the end of password input fields
+    function togglePassword(){
+    const passwordInput = document.querySelector("#inputPassword")
+    passwordInput.type = passwordInput.type === "text" ? "password" : "text"
+    const eyeIcon = document.querySelector("#eye")
+    eyeIcon.classList.contains("d-none") ? eyeIcon.classList.remove("d-none") : eyeIcon.classList.add("d-none")
+    const eyeSlashIcon = document.querySelector("#eye-slash")
+    eyeSlashIcon.classList.contains("d-none") ? eyeSlashIcon.classList.remove("d-none") : eyeSlashIcon.classList.add("d-none")
+  }
+</script>
 {% endblock %}

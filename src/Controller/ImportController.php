@@ -32,7 +32,7 @@ class ImportController extends AbstractController
             return $this->redirectToRoute('app_import',['id'=> $id]);
         }
         
-       $isImport = $import->import($csv,$id);
+       $isImport = $import->import($csv,$id,$this->getUser());
 
          if($isImport){
               $this->addFlash('success','Importation réussie');

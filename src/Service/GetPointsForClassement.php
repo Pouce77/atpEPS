@@ -3,14 +3,13 @@
 namespace App\Service;
 
 use App\Entity\Points;
-use App\Entity\Student;
 use App\Repository\PointsRepository;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Service\OptionService;
 
 class GetPointsForClassement
 {
 
-    public function __construct(private PointsRepository $pointsRepository)
+    public function __construct(private PointsRepository $pointsRepository, private OptionService $optionService)
     {
         
     }
@@ -19,10 +18,16 @@ class GetPointsForClassement
     {
         global $pointGagnant;
         $points=$this->pointsRepository->findOneBy(['user'=>$user]);
+        if($points==null){
+            $points=new Points();
+            $points=$this->optionService->getOptionPoints();
+        }
+        
+        dump($points->getUnderPoints()['5']);
         switch ($diff) {
-        case $diff<=-5 :
+            case $diff<=-5 :
                 $pointGagnant=$points->getUnderPoints()['5'];
-            break;
+                break;
             case $diff===-4 :
                 $pointGagnant=$points->getUnderPoints()['4'];
                 break;
@@ -37,6 +42,7 @@ class GetPointsForClassement
                 break;
             case $diff===0 :
                 $pointGagnant=$points->getUnderPoints()['1'];
+                dump($pointGagnant);
                 break;
             case $diff===1 :
                 $pointGagnant=$points->getAbovePoints()['1'];
@@ -61,14 +67,17 @@ class GetPointsForClassement
          {
               $pointGagnant=$points->getAbovePoints()['1'];
          }
-        dump($pointGagnant);
         return $pointGagnant;
     }
 
-    public function getMatchLostPoints($user):int
+    public function getMatchLostPoints($user):float
     {
 
         $points=$this->pointsRepository->findOneBy(['user'=>$user]);
+        if($points==null){
+            $points=new Points();
+            $points=$this->optionService->getOptionPoints();
+        }
         $pointLost=$points->getMatchLostPoints();
 
         return $pointLost;

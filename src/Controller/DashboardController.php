@@ -46,7 +46,7 @@ class DashboardController extends AbstractController
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid() ){
-            
+            $groupe->setUser($this->getUser());
             $em->persist($groupe);
             $em->flush();
         }
@@ -60,13 +60,12 @@ class DashboardController extends AbstractController
             // Parcourez les erreurs et stockez-les dans le tableau
             foreach ($errors as $error) {
                 $errorMessages[] = $error->getMessage();
-                dump($error->getMessage());
             }
 
             $this->addFlash('danger', implode("\n", $errorMessages));
         }
 
-        $groupes=$groupeRepository->findAll();
+        $groupes=$groupeRepository->findBy(['user'=> $this->getUser()]);
 
         return $this->render('dashboard/groupe.html.twig', [
             'form' => $form->createView(),
@@ -78,7 +77,7 @@ class DashboardController extends AbstractController
     public function view(string $id, StudentRepository $student): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-        $groupe = $student->findBy(['groupe' => $id]);
+        $groupe = $student->findBy(['groupe' => $id,'user' => $this->getUser()]);
         return $this->render('dashboard/groupe_view.html.twig', [
             'groupe' => $groupe,
             'id' => $id,

@@ -3,14 +3,15 @@
 namespace App\Service;
 
 use App\Entity\Tournament;
+use App\Entity\User;
 use App\Repository\TournamentRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
 class UpdateClassement
 {
-    public function update(string $title, EntityManagerInterface $em, TournamentRepository $tournamentRepository)
+    public function update(string $title, EntityManagerInterface $em, TournamentRepository $tournamentRepository,User $user)
     {
-        $updateTournaments=$tournamentRepository->findBy(['title'=> $title],['Points'=>'DESC','goalaverage'=>'DESC']);
+        $updateTournaments=$tournamentRepository->findBy(['title'=> $title,'user'=>$user],['Points'=>'DESC','goalaverage'=>'DESC']);
         $points=$updateTournaments[0]->getPoints();
 
         for ($i=0;$i<count($updateTournaments);$i++) {

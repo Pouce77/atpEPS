@@ -2,25 +2,26 @@
 
 namespace App\Service;
 
+use App\Entity\Groupe;
 use App\Entity\Student;
+use App\Repository\GroupeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
 class Getgroupe
 {
-  public function __construct(private EntityManagerInterface $entityManager)
+  public function __construct(private EntityManagerInterface $entityManager,private GroupeRepository $repository)
   {
   
   } 
 
-  public function getGroupes():array
+  public function getGroupes($user):array
   {
-    $students = $this->entityManager->getRepository(Student::class)->findAll();
-    $groupes = [];
-    foreach ($students as $student) {
-        if(!in_array($student->getGroupe(),$groupes)){
-        array_push($groupes,$student->getGroupe());
-        }
+    $groups = $this->repository->findByUser($user);
+    $groupes=[];
+    foreach($groups as $group){
+      array_push($groupes,$group->getName());
     }
+    
     return $groupes;
   }
 }

@@ -12,7 +12,7 @@ class ImportCSV
   
   } 
 
-  public function import($csv, $group):bool
+  public function import($csv, $group,$user):bool
   {
     $lineFromCSV=read($csv); 
     $isVerified=isVerified($lineFromCSV);
@@ -28,6 +28,7 @@ class ImportCSV
         $student->setNom($stud['0']);
         $student->setPrenom($stud['1']);
         $student->setGroupe($group);
+        $student->setUser($user);
 
         $this->entityManager->persist($student);
         $this->entityManager->flush();
